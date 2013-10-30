@@ -1,6 +1,0 @@
-+rss [option] [args]
--- Options are add, rem, up, and feeds.
--- add [name] -- [url] Starts following [name] at [url].
--- rem [name] -- stops following [name]
--- up [name] -- Does a force update to feed [name]
--- feeds -- lists all installed feeds.

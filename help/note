@@ -1,5 +1,0 @@
-note [type] [args] - Gives access to usermade notes
-[type] can be e(Edit), x(eXecute), a(Append),C(Create),d(Delete),r(Read), list(List all of your notes).
-Usage for x,r,d: +note [type] [title]. Example: +note r rubybot
-Usage for Create: +note c text [title] [content]
-Usage for edit, append: +note [e/a] [title] [text]

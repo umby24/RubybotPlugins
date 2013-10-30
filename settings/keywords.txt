@@ -1,0 +1,7 @@
+[pre]
+:hi=interact_hi
+:bye=interact_bye
+[post]
+help=command_help
+commands=command_commands
+time=command_time

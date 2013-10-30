@@ -92,6 +92,11 @@ end
 
 regLib("cgi")
 regLib("open-uri")
+
 regMsg("plugin_title", "message_title")
+
 regCmd("blacklist","command_blacklist")
 regCmd("unblacklist","command_unblacklist")
+
+regHelp("blacklist", nil, [$prefix + "blacklist", "Blacklists the current channel from the URL Title plugin."])
+regHelp("unblacklist", nil, [$prefix + "unblacklist", "UnBlacklists the current channel from the URL Title plugin."])

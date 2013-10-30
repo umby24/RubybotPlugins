@@ -1,5 +1,5 @@
 def forgemessage()
-    if $message[0,1] != "+" && $message.include?(":") && $host[0,$host.index("!")] == "SinZationalBot"
+    if $message[0,1] != "+" && $message.include?(":") && $name == "SinZationalBot"
         orighost = $host
         origmess = $message
         $host = $message[0, $message.index(":")] + "!"

@@ -175,3 +175,8 @@ def sendtoall(text)
 end
 regCon("rss_loop","kickoff")
 regCmd("rss","command_rss")
+
+regHelp("rss", "add", [$prefix + "rss add <Feed name> <RSS URL>","Adds the given URL to the RSS feed watcher, under the given feed name."])
+regHelp("rss", "rem", [$prefix + "rss rem <Feed name>", "Removes the given feed from the RSS watcher."])
+regHelp("rss", "up", [$prefix + "rss up <Feed name>", "Runs a manual rescan on the given feed, and will return the most recent article."])
+regHelp("rss", "feeds", [$prefix + "rss feeds", "Lists all currently followed feeds by name."])

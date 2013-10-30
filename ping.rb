@@ -34,3 +34,5 @@ end
 regCmd("ping","command_ping")
 regGCmd("ping","command_ping")
 regRead("ping","ping_intercept")
+
+regHelp("ping", nil, [$prefix + "ping <Server IP> <Server port>", "Pings the given minecraft server and returns it's name, and current players."])

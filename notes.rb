@@ -111,14 +111,14 @@ case type
     index = $message.index($args[2])
     index += $args[2].length + 1
     string = $message[index,$message.length - index]
-    edit_note($host[0,$host.index("!")],$args[2],string)
+    edit_note($name,$args[2],string)
   when "a"
     index = $message.index($args[3])
     index += $args[3].length
     string = $message[index,$message.length - index]
     append_note($host[0,host.index("!")],$args[2],string)    
   when "x"
-    exec_note($host[0,$host.index("!")],$args[2])
+    exec_note($name,$args[2])
   when "c"
    index = $message.index($args[3])
    index += $args[3].length + 1
@@ -129,13 +129,13 @@ case type
    elsif $args[2] == "exec"
      type = 2
    end
-   new_note($host[0,$host.index("!")],type,$args[3],string)
+   new_note($name,type,$args[3],string)
   when "d"
-    del_note($host[0,$host.index("!")],$args[2])
+    del_note($name,$args[2])
   when "list"
-    list_notes($host[0,$host.index("!")])
+    list_notes($name)
   when "r"
-    read_note($host[0,$host.index("!")],$args[2])
+    read_note($name,$args[2])
   else
     sendmessage("Try +help note.")
 end
@@ -147,3 +147,10 @@ end
 end
 regCmd("note","command_note")
 regGCmd("note","command_note")
+
+regHelp("note", "e", [$prefix + "note e <Title> <Text>", "Sets the contents of note <title> to <text>."])
+regHelp("note", "a", [$prefix + "note a <Title> <Text>", "Appends <Text> on the end of note <title>."])
+regHelp("note", "c", [$prefix + "note c text <Title> <Text>", "Creates a new text note with the name <Title> and the content <text>."])
+regHelp("note", "r", [$prefix + "note r <Title>", "Sends you back the content of the given note."])
+regHelp("note", "d", [$prefix + "note d <Title>", "Deletes the given note."])
+regHelp("note", "list", [$prefix + "note list", "Lists the notes stored for you."])
