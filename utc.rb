@@ -12,4 +12,8 @@ def command_utc()
 end
 regCmd("utc","command_utc")
 regGCmd("utc","command_utc")
-regHelp("utc", nil, [$prefix + "utc [+/-][offset]", "Returns the current time at the given utc offset."])
+
+help = Help.new("utc")
+help.addDescription("Returns the current time at the given utc offset.")
+help.addArgument("offset", "The UTC offset to retreive.")
+$help.push(help)

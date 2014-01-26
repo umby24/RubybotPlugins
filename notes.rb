@@ -87,12 +87,14 @@ def exec_note(user,title)
   begin
   eval(content)
   rescue Exception => e
-  err_log(e.message)
+  #err_log(e.message)
+  watchdog_Log(e.message, e.backtrace)
   sendmessage("Your note errored, please revise and see error log for details.")
   end
   sendmessage("Command has been run.")
   return
 end
+
 def list_notes(user)
   pm("Notes:",user)
   Dir.foreach("notes/#{user}/text") do |f|
@@ -101,9 +103,10 @@ def list_notes(user)
     end
   end
 end
+
 def command_note()
-type = $args[1] #Determine what to do. Edit, Append, Xecute, Create, Delete, LIST, Read
-type = type.downcase
+type = $args[1].downcase #Determine what to do. Edit, Append, Xecute, Create, Delete, LIST, Read
+
 begin
 
 case type
@@ -116,7 +119,7 @@ case type
     index = $message.index($args[3])
     index += $args[3].length
     string = $message[index,$message.length - index]
-    append_note($host[0,host.index("!")],$args[2],string)    
+    append_note($host[0,$host.index("!")],$args[2],string)    
   when "x"
     exec_note($name,$args[2])
   when "c"
@@ -137,20 +140,45 @@ case type
   when "r"
     read_note($name,$args[2])
   else
-    sendmessage("Try +help note.")
+    sendmessage("Try " + $prefix + "help note.")
 end
 
 rescue Exception => e
-sendmessage("Error: Try +help note for proper usage.")
+sendmessage("Error: Try " + $prefix + "help note for proper usage.")
 sendmessage(e.message)
 end
 end
 regCmd("note","command_note")
 regGCmd("note","command_note")
 
-regHelp("note", "e", [$prefix + "note e <Title> <Text>", "Sets the contents of note <title> to <text>."])
-regHelp("note", "a", [$prefix + "note a <Title> <Text>", "Appends <Text> on the end of note <title>."])
-regHelp("note", "c", [$prefix + "note c text <Title> <Text>", "Creates a new text note with the name <Title> and the content <text>."])
-regHelp("note", "r", [$prefix + "note r <Title>", "Sends you back the content of the given note."])
-regHelp("note", "d", [$prefix + "note d <Title>", "Deletes the given note."])
-regHelp("note", "list", [$prefix + "note list", "Lists the notes stored for you."])
+help = Help.new("note")
+help.addDescription("A command for managing per-user notes.")
+
+help.addSubCommand("e")
+help.addSubCommand("a")
+help.addSubCommand("c text")
+help.addSubCommand("r")
+help.addSubCommand("d")
+help.addSubCommand("list")
+
+help.addSubCommandDescription("e", "Sets the contents of note <title> to <text>.")
+help.addSubCommandArgument("e", "Title", "The title of the note to edit.")
+help.addSubCommandArgument("e", "Text", "The new text for the note.")
+
+help.addSubCommandDescription("a", "Appends <Text> on the end of note <title>.")
+help.addSubCommandArgument("a", "Title", "The title of the note to append to.")
+help.addSubCommandArgument("a", "Text", "The text to append on to the note.")
+
+help.addSubCommandDescription("c text", "Creates a new text note with the name <Title> and the content <text>.")
+help.addSubCommandArgument("c text", "Title", "The title of the note to create.")
+help.addSubCommandArgument("c text", "Text", "The text that will be inside of the new note.")
+
+help.addSubCommandDescription("r", "Sends you back the content of the given note.")
+help.addSubCommandArgument("r", "Title", "The title of the note to play back.")
+
+help.addSubCommandDescription("d", "Deletes the given note.")
+help.addSubCommandArgument("d", "Title", "The title of the note to delete.")
+
+help.addSubCommandDescription("list", "Lists the notes stored for you.")
+
+$help.push(help)

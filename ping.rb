@@ -28,11 +28,18 @@ def command_ping()
     begin
 		mythread = Thread.new{getit($args[1],$args[2].gsub("\r\n","").gsub("\r","").gsub("\n",""))}
 	rescue Exception => e
-		return err_log(e.message)
+		watchdog_Log(e.message, e.backtrace)
+		#return err_log(e.message)
 	end
 end
 regCmd("ping","command_ping")
 regGCmd("ping","command_ping")
 regRead("ping","ping_intercept")
 
-regHelp("ping", nil, [$prefix + "ping <Server IP> <Server port>", "Pings the given minecraft server and returns it's name, and current players."])
+help = Help.new("ping")
+help.addDescription("Pings the given minecraft server and returns it's name, and current players.")
+help.addArgument("Server IP", "The IP of the server to be pinged.")
+help.addArgument("Server Port", "The port of the server to be pinged.")
+$help.push(help)
+
+#regHelp("ping", nil, [$prefix + "ping <Server IP> <Server port>", "Pings the given minecraft server and returns it's name, and current players."])

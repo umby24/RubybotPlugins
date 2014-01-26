@@ -176,7 +176,23 @@ end
 regCon("rss_loop","kickoff")
 regCmd("rss","command_rss")
 
-regHelp("rss", "add", [$prefix + "rss add <Feed name> <RSS URL>","Adds the given URL to the RSS feed watcher, under the given feed name."])
-regHelp("rss", "rem", [$prefix + "rss rem <Feed name>", "Removes the given feed from the RSS watcher."])
-regHelp("rss", "up", [$prefix + "rss up <Feed name>", "Runs a manual rescan on the given feed, and will return the most recent article."])
-regHelp("rss", "feeds", [$prefix + "rss feeds", "Lists all currently followed feeds by name."])
+help = Help.new("rss")
+help.addDescription("Command for managing RSS feeds.")
+help.addSubCommand("add")
+help.addSubCommand("rem")
+help.addSubCommand("up")
+help.addSubCommand("feeds")
+
+help.addSubCommandDescription("add", "Adds the given URL to the RSS feed watcher, under the given feed name.")
+help.addSubCommandArgument("add","Feed name", "The name that will be displayed whenever an update is detected.")
+help.addSubCommandArgument("add", "RSS URL", "The URL for the RSS feed")
+
+help.addSubCommandDescription("up", "Runs a manual rescan on the given feed, and will return the most recent article.")
+help.addSubCommandArgument("up", "Feed name", "The name of the feed to perform the manual update on.")
+
+help.addSubCommandDescription("rem", "Removes the given feed from the RSS watcher.")
+help.addSubCommandArgument("rem", "Feed name", "The name of the feed to remove")
+
+help.addSubCommandDescription("feeds", "Lists all currently followed feeds by name.")
+
+$help.push(help)

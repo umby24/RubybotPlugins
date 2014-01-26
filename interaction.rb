@@ -19,7 +19,7 @@ def loadKeywords()
 			end
 			
 			if type != "pre" and type != "post" and suppress == 0
-				err_log("Interaction(Load keywords): Unexpected type found. Skipping lines.")
+				#err_log("Interaction(Load keywords): Unexpected type found. Skipping lines.")
 				suppress = 1
 			end
 			key = line[0, line.index("=")]
@@ -31,9 +31,10 @@ def loadKeywords()
 			end
 		}
 	rescue Exception => e
-		err_log("Interaction(Load keywords): #{e.message}")
+		watchdog_Log("Interaction(Load keywords): #{e.message}", e.backtrace)
+		#err_log("Interaction(Load keywords): #{e.message}")
 	end
-	puts "Keywords Loaded."
+	_log("INFO", "interaction", "loadKeywords", "Keywords Loaded.")
 end
 
 def interaction_do()
@@ -41,13 +42,15 @@ def interaction_do()
 		begin
 			send($preWords.fetch($splits[2]).to_sym)
 		rescue Exception => e
-			err_log("Interaction(Interaction run): #{e.message}")
+			watchdog_Log("Interaction(Interaction run): #{e.message}", e.backtrace)
+			#err_log("Interaction(Interaction run): #{e.message}")
 		end
 	elsif ($splits[2] == ":" + $botname or $splits[2] == ":" + $botname + ":") and $postWords.fetch($splits[3], nil) != nil
 		begin
 			send($postWords.fetch($splits[3]).to_sym)
 		rescue Exception => e
-			err_log("Interaction(Interaction run): #{e.message}")
+			watchdog_Log("Interaction(Interaction run): #{e.message}", e.backtrace)
+			#err_log("Interaction(Interaction run): #{e.message}")
 		end
 	end
 end
@@ -57,6 +60,9 @@ def interact_hi()
 end
 def interact_bye()
 	sendmessage("Catch ya later " + $name + ".")
+end
+def interact_fuck()
+	sendmessage("See you in the bedroom then, " + $name)
 end
 loadKeywords()
 regMsg("interaction", "interaction_do")
