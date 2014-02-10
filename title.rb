@@ -90,6 +90,7 @@ def command_unblacklist()
     sendmessage("Un-Blacklisted")
 end
 
+regLib("openssl")
 regLib("cgi")
 regLib("open-uri")
 

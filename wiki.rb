@@ -13,9 +13,7 @@ def wikipedia_lookup(query)
 	
 	filtered = /<p>(.*?)<\/p>/.match(querydata)[0]
 	filtered = filtered.gsub(%r{</?[^>]+?>}, "")
-	
-	puts filtered
-	
+		
 	return filtered
 end
 def command_wikipedia()

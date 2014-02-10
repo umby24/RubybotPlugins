@@ -9,7 +9,6 @@ def Do_Dictionary_Lookup(term)
 	website.close()
 	definition = ""
 	part = ""
-	puts text
 	pull = 0
 	
 	if jsonObj["primaries"] != nil
