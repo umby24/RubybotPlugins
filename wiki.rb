@@ -9,7 +9,18 @@ def wikipedia_lookup(query)
 	wSock.close()
 	
 	jsonobj = JSON.parse(content)
+	
+	if jsonobj["error"] != nil
+		return jsonobj["error"]["info"]
+	end
+	
 	querydata = jsonobj["parse"]["text"]["*"]
+	
+	if querydata.include?("<ul class=\"redirectText\">")
+		filtered = /<a(.*?)<\/a>/.match(querydata)[0]
+		filtered = filtered.gsub(%r{</?[^>]+?>}, "")
+		return wikipedia_lookup(filtered)
+	end
 	
 	filtered = /<p>(.*?)<\/p>/.match(querydata)[0]
 	filtered = filtered.gsub(%r{</?[^>]+?>}, "")
@@ -18,7 +29,7 @@ def wikipedia_lookup(query)
 end
 def command_wikipedia()
 	mmessage = $message[$message.index(" ") + 1, $message.length - ($message.index(" ") + 1)]
-	sendmessage(wikipedia_lookup(mmessage))
+	send_message(wikipedia_lookup(mmessage))
 end	
 
 regCmd("wiki", "command_wikipedia")
